@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "975190835511",
+    "project_id": "usezeeh",
+    "storage_bucket": "usezeeh.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:975190835511:android:0b428d5aefeb42a5d61ab2",
+        "android_client_info": {
+          "package_name": "com.example.zeeh_mmobile_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "975190835511-ch56bkq9vm2hluab1u6nmsbgdlj3jurq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2jvzounIp5H1dOm5fiTRDnsxfHrtb1qY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "975190835511-ch56bkq9vm2hluab1u6nmsbgdlj3jurq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "975190835511-o7iarc7s1vrbo9c9hqucrqd7e4thqqde.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.zeehtechnologieslimited.usezeeh"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:975190835511:android:96812e83d8f2bb88d61ab2",
+        "android_client_info": {
+          "package_name": "com.zeehtechnologies.zeeh_mobile_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "975190835511-ch56bkq9vm2hluab1u6nmsbgdlj3jurq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2jvzounIp5H1dOm5fiTRDnsxfHrtb1qY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "975190835511-ch56bkq9vm2hluab1u6nmsbgdlj3jurq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "975190835511-o7iarc7s1vrbo9c9hqucrqd7e4thqqde.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.zeehtechnologieslimited.usezeeh"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

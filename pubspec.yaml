@@ -1,0 +1,118 @@
+name: zeeh_mobile
+description: A new Flutter project.
+
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
+
+version: 1.5.0+15
+
+environment:
+  sdk: ">=3.0.3 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  awesome_notifications: ^0.7.4+1
+  shared_preferences: ^2.2.2
+  flutter_riverpod: ^2.3.6
+  flutter_screenutil: ^5.8.4
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  json_annotation: ^4.8.1
+  flutter_svg: ^2.0.6
+  smooth_page_indicator: ^1.1.0
+  pin_code_fields: ^7.4.0
+  intl: ^0.17.0
+  connectivity_plus: ^5.0.2
+  http: ^0.13.5
+  retry: ^3.1.2
+  dartz: ^0.10.1
+  fluttertoast: ^8.2.2
+  face_camera: ^0.0.8
+  firebase_core: ^2.15.0
+  firebase_messaging: ^14.6.5
+  firebase_analytics: ^10.4.4
+  firebase_auth: ^4.7.2
+  permission_handler: ^10.4.3
+  local_auth: ^2.1.6
+  loading_indicator: ^3.1.1
+  path_provider: ^2.0.15
+  path: ^1.8.3
+  pull_to_refresh: ^2.0.0
+  syncfusion_flutter_gauges: ^21.2.4
+  image_picker: ^1.0.1
+  webview_flutter: ^4.2.2
+  url_launcher: ^6.1.12
+  zeeh: ^0.1.5
+  clipboard: ^0.1.3
+  # biopassid_face_sdk: ^2.0.1
+
+  cupertino_icons: ^1.0.2
+  google_fonts: ^4.0.4
+  pdf: ^3.3.0
+  printing: ^5.12.0
+  
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_launcher_icons: ^0.13.1
+  json_serializable: ^6.7.0
+  build_runner: ^2.4.5
+  hive_generator: ^2.0.0
+
+  flutter_lints: ^2.0.0
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/icons/zeeh_logo.png"
+  adaptive_icon_background: "#FFFFFF"
+  adaptive_icon_foreground: "assets/icons/zeeh_logo.png"
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter packages.
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/
+    - assets/images/
+    - assets/icons/
+    - assets/fonts/
+    - assets/fonts/ClashGrotesk_Complete/
+    - assets/fonts/ClashGrotesk_Complete/Fonts/
+    - assets/fonts/ClashGrotesk_Complete/Fonts/OTF/
+    - assets/fonts/Space_Grotesk/
+    - assets/fonts/Space_Grotesk/static/
+    - assets/fonts/DM_Sans/
+
+  fonts:
+    - family: ClashGrotesk
+      fonts:
+        - asset: assets\fonts\ClashGrotesk_Complete\Fonts\OTF\ClashGrotesk-Bold.otf
+        - asset: assets\fonts\ClashGrotesk_Complete\Fonts\OTF\ClashGrotesk-Extralight.otf
+        - asset: assets\fonts\ClashGrotesk_Complete\Fonts\OTF\ClashGrotesk-Light.otf
+        - asset: assets\fonts\ClashGrotesk_Complete\Fonts\OTF\ClashGrotesk-Medium.otf
+        - asset: assets\fonts\ClashGrotesk_Complete\Fonts\OTF\ClashGrotesk-Regular.otf
+        - asset: assets\fonts\ClashGrotesk_Complete\Fonts\OTF\ClashGrotesk-Semibold.otf
+
+    - family: SpaceGrotesk
+      fonts:
+        - asset: assets/fonts/Space_Grotesk/static/SpaceGrotesk-Bold.ttf
+        - asset: assets/fonts/Space_Grotesk/static/SpaceGrotesk-Light.ttf
+        - asset: assets/fonts/Space_Grotesk/static/SpaceGrotesk-Medium.ttf
+        - asset: assets/fonts/Space_Grotesk/static/SpaceGrotesk-Regular.ttf
+
+    - family: DM Sans
+      fonts:
+        - asset: assets\fonts\DM_Sans\DMSans-Black.ttf
+        - asset: assets\fonts\DM_Sans\DMSans-Bold.ttf
+        - asset: assets\fonts\DM_Sans\DMSans-ExtraBold.ttf
+        - asset: assets\fonts\DM_Sans\DMSans-ExtraLightItalic.ttf
+        - asset: assets\fonts\DM_Sans\DMSans-Light.ttf
+        - asset: assets\fonts\DM_Sans\DMSans-Medium.ttf
+        - asset: assets\fonts\DM_Sans\DMSans-Regular.ttf
+        - asset: assets\fonts\DM_Sans\DMSans-SemiBold.ttf
+        
