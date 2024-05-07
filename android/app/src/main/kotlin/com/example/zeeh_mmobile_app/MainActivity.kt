@@ -1,4 +1,4 @@
-package com.example.zeeh_mmobile_app
+package com.ZeehAfrica.myapp
 
 import io.flutter.embedding.android.FlutterFragmentActivity
 

@@ -14,7 +14,10 @@ class OldHistory extends ConsumerWidget {
     DateTime parsedDate = DateTime.parse(scoreData['searchedDate']);
     String formattedDate = DateFormat('yyyy-MM-dd').format(parsedDate);
 
-    return Scaffold(
+    return scoreData.isEmpty?
+    Center(child: CircularProgressIndicator(),)
+    :
+    Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -61,6 +64,7 @@ class OldHistory extends ConsumerWidget {
                         title2: "",
                         subtitle2: ""),
                   ),
+                  
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: CustomRow(

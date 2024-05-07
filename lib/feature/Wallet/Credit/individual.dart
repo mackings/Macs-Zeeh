@@ -41,8 +41,10 @@ class _IndividualsState extends ConsumerState<Individuals> {
   bool _downloaded2 = false;
 
   late final pw.Font _openSansFont;
+
   Map<String, dynamic>? alldata;
   Map<String, dynamic>? olddata;
+
   dynamic User_id;
   bool _apiCallCompleted = false;
   bool _apiCallCompleted2 = false;
@@ -81,8 +83,7 @@ class _IndividualsState extends ConsumerState<Individuals> {
       _downloading = true;
     });
 
-    var url =
-        Uri.parse('https://sandbox.api.zeeh.africa/credit_reports/crc_basic');
+    var url = Uri.parse('https://v2.api.zeeh.africa/credit_reports/crc_basic');
     var payload = {"bvn": bvn.text, "mobile_app": true, "user_id": User_id};
     var response = await http.post(
       url,
@@ -153,7 +154,7 @@ class _IndividualsState extends ConsumerState<Individuals> {
 
     var url = Uri.parse(
         //'https://sandbox.api.zeeh.africa/credit_reports/one_history?plan=plan&id=${bvn.text}&mobile_app=true'
-        'https://sandbox.api.zeeh.africa/credit_reports/one_history?id=${bvn.text}&mobile_app=true&plan=crc_basic');
+        'https://v2.api.zeeh.africa/credit_reports/one_history?id=${bvn.text}&mobile_app=true&plan=crc_basic');
 
     var response = await http.get(
       url,
@@ -166,6 +167,7 @@ class _IndividualsState extends ConsumerState<Individuals> {
     if (response.statusCode == 200) {
       var jsonResponse = jsonDecode(response.body);
       var data = jsonResponse['data'];
+
       setState(() {
         olddata = data;
         _apiCallCompleted2 = true;
@@ -175,6 +177,14 @@ class _IndividualsState extends ConsumerState<Individuals> {
         _downloading2 = false;
         _downloaded2 = true;
       });
+      print(response.statusCode);
+      print(data);
+
+    } else if (response.statusCode == 400) {
+      setState(() {
+        _downloading2 = false;
+        _downloaded2 = false;
+      });
     } else {
       setState(() {
         _downloading2 = false;
@@ -182,17 +192,6 @@ class _IndividualsState extends ConsumerState<Individuals> {
       });
       print('Post request failed with status: ${response.statusCode}');
       print('Response body: ${response.body}');
-
-      if (response.statusCode == 400 &&
-          response.body.contains('In-surficient fund!')) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            backgroundColor: ZeehColors.buttonPurple,
-            content: Text('Insufficient funds! Please try again later.'),
-            duration: Duration(seconds: 3),
-          ),
-        );
-      }
     }
   }
 
@@ -231,27 +230,24 @@ class _IndividualsState extends ConsumerState<Individuals> {
               ),
 
               SizedBox(height: 10.h),
-              
+
               Container(
                 decoration: BoxDecoration(
                     border: Border.all(width: 1.0, color: ZeehColors.greyColor),
                     borderRadius: BorderRadius.circular(8)),
                 child: DropdownButtonFormField<String>(
                   items: const [
-
                     DropdownMenuItem(
                       value: "crc",
                       child: Text("CRC"),
                     ),
                   ],
-
                   onChanged: (value) {
                     setState(() {
                       selectedValue1 = value;
                     });
                     print("Selected value: $selectedValue1");
                   },
-
                   decoration: const InputDecoration(
                     hintText: "CRC",
                     border: InputBorder.none,
@@ -259,7 +255,7 @@ class _IndividualsState extends ConsumerState<Individuals> {
                         EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
                   ),
                   value: "crc",
-                 isExpanded: true, 
+                  isExpanded: true,
                 ),
               ),
 
@@ -287,8 +283,6 @@ class _IndividualsState extends ConsumerState<Individuals> {
                       value: "new",
                       child: Text("New report"),
                     ),
-
-                  
                   ],
 
                   onChanged: (value) {
@@ -329,11 +323,10 @@ class _IndividualsState extends ConsumerState<Individuals> {
               ),
               SizedBox(height: 300.h),
 
-
 GestureDetector(
   onTap: () async {
     if (selectedValue2 == "old") {
-      if (_downloaded2) {
+      if (_downloaded2 && olddata != null) {
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -343,27 +336,36 @@ GestureDetector(
       } else {
         try {
           await CheckOldhistory();
-          setState(() {
-            _downloaded2 = true; 
-          });
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => OldHistory(scoreData: olddata!),
-            ),
-          );
+          if (_downloaded2 && olddata != null) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => OldHistory(scoreData: olddata!),
+              ),
+            );
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor: ZeehColors.buttonPurple,
+                content: Text(
+                  'Failed to fetch data. Please try again later.'),
+                duration: Duration(seconds: 3),
+              ),
+            );
+          }
         } catch (e) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               backgroundColor: ZeehColors.buttonPurple,
-              content: Text('Failed to fetch data. Please try again later.'),
+              content: Text(
+                'Failed to fetch data. Please try again later.'),
               duration: Duration(seconds: 3),
             ),
           );
         }
       }
     } else if (selectedValue2 == "new") {
-      await _downloadPdf(); // Call the function to download the PDF
+      await _downloadPdf(); 
       if (_downloaded) {
         Navigator.push(
           context,
@@ -372,115 +374,53 @@ GestureDetector(
           ),
         );
       } else {
-        // ScaffoldMessenger.of(context).showSnackBar(
-        //   SnackBar(
-        //     backgroundColor: ZeehColors.buttonPurple,
-        //     content: Text('Failed to fetch data. Please try again later.'),
-        //     duration: Duration(seconds: 3),
-        //   ),
-        // );
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: ZeehColors.buttonPurple,
+            content: Text(
+              'Failed to fetch data. Please try again later.'),
+            duration: Duration(seconds: 3),
+          ),
+        );
       }
     }
   },
   child: (_downloading2 || _downloading)
-      ? Center(
-          child: LoadingIndicatorWidget(
-            color: ZeehColors.buttonPurple,
-            height: 20.h,
-            width: 20.w,
-          ),
-        )
-      : Padding(
-        padding: const EdgeInsets.only(left: 10,right: 10),
+    ? Center(
+        child: LoadingIndicatorWidget(
+          color: ZeehColors.buttonPurple,
+          height: 20.h,
+          width: 20.w,
+        ),
+      )
+    : Padding(
+        padding: const EdgeInsets.only(left: 10, right: 10),
         child: Container(
-            height: 45.h,
-            width: MediaQuery.of(context).size.width - 20,
-            decoration: BoxDecoration(
-              color: ZeehColors.buttonPurple,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Center(
-              child: _downloaded2
-                  ? DMSanText(
-                      text: "Preview",
-                      textColor: Colors.white,
-                    )
-                  : DMSanText(
-                      text: "Generate report",
-                      textColor: Colors.white,
-                      fontWeight: FontWeight.w500,
-                    ),
-            ),
+          height: 45.h,
+          width: MediaQuery.of(context).size.width - 20,
+          decoration: BoxDecoration(
+            color: ZeehColors.buttonPurple,
+            borderRadius: BorderRadius.circular(8),
           ),
+          child: Center(
+            child: _downloaded2
+              ? DMSanText(
+                  text: "Preview",
+                  textColor: Colors.white,
+                )
+              : DMSanText(
+                  text: "Generate report",
+                  textColor: Colors.white,
+                  fontWeight: FontWeight.w500,
+                ),
+          ),
+        ),
       ),
 ),
 
 
 
-
-
-              // Padding(
-              //   padding: const EdgeInsets.all(8.0),
-              //   child: ZeehButton3(
-              //     loading: _downloading2,
-              //     onClick: _downloaded2
-              //         ? () {
-              //             Navigator.push(
-              //               context,
-              //               MaterialPageRoute(
-              //                 builder: (context) =>
-              //                     OldHistory(scoreData: olddata!),
-              //               ),
-              //             );
-              //           }
-              //         : _downloading2
-              //             ? null
-              //             : () async {
-              //                 try {
-              //                   await CheckOldhistory();
-              //                   setState(() {
-              //                     _downloaded2 = true;
-              //                   });
-              //                 } catch (e) {
-              //                   print('Error: $e');
-              //                 }
-              //               },
-              //     text: _downloaded2 ? "Preview" : "Generate previous report",
-              //   ),
-              // ),
-
               SizedBox(height: 10.h),
-
-              // Padding(
-              //   padding: const EdgeInsets.all(8.0),
-              //   child: ZeehButton2(
-              //     loading: _downloading,
-              //     onClick: _downloaded
-              //         ? () {
-              //             Navigator.push(
-              //               context,
-              //               MaterialPageRoute(
-              //                 builder: (context) =>
-              //                     ScoreHistory(scoreData: alldata!),
-              //               ),
-              //             );
-              //           }
-              //         : _downloading
-              //             ? null
-              //             : () async {
-              //                 try {
-              //                   await _downloadPdf();
-              //                   // Toggle _downloaded flag when the API call is successful
-              //                   setState(() {
-              //                     _downloaded = true;
-              //                   });
-              //                 } catch (e) {
-              //                   print('Error: $e');
-              //                 }
-              //               },
-              //     text: _downloaded ? "Preview" : "Generate new report",
-              //   ),
-              // ),
             ],
           ),
         ),

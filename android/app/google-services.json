@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:975190835511:android:0b428d5aefeb42a5d61ab2",
         "android_client_info": {
-          "package_name": "com.example.zeeh_mmobile_app"
+          "package_name": "com.ZeehAfrica.myapp"
         }
       },
       "oauth_client": [
@@ -45,9 +45,10 @@
       "client_info": {
         "mobilesdk_app_id": "1:975190835511:android:96812e83d8f2bb88d61ab2",
         "android_client_info": {
-          "package_name": "com.zeehtechnologies.zeeh_mobile_app"
+          "package_name": "com.ZeehAfrica.myapp"
         }
       },
+     
       "oauth_client": [
         {
           "client_id": "975190835511-ch56bkq9vm2hluab1u6nmsbgdlj3jurq.apps.googleusercontent.com",

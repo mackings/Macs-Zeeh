@@ -54,13 +54,14 @@ class _TranshistoryState extends State<Transhistory> {
 
       var response = await http.get(
         Uri.parse(
-            'https://sandbox.api.zeeh.africa/wallet/get_usezeeh_user_transaction/$walletId'),
+            'https://v2.api.zeeh.africa/wallet/get_usezeeh_user_transaction/$walletId'),
       );
-     //$walletId
+      //$walletId
       if (response.statusCode == 200) {
         print(walletId);
         var jsonResponse = jsonDecode(response.body);
         var data = jsonResponse['data'];
+        print(data);
         if (data is List) {
           setState(() {
             transactions = data
@@ -109,17 +110,17 @@ class _TranshistoryState extends State<Transhistory> {
           Expanded(
             child: isLoading
                 ? Container(
-              height: 812.h,
-              width: 375.w,
-              color: Colors.transparent,
-              child: Center(
-                child: LoadingIndicatorWidget(
-                  color: ZeehColors.buttonPurple,
-                  height: 40.h,
-                  width: 40.w,
-                ),
-              ),
-            )
+                    height: 812.h,
+                    width: 375.w,
+                    color: Colors.transparent,
+                    child: Center(
+                      child: LoadingIndicatorWidget(
+                        color: ZeehColors.buttonPurple,
+                        height: 40.h,
+                        width: 40.w,
+                      ),
+                    ),
+                  )
                 : transactions.isEmpty
                     ? Center(
                         child: Column(

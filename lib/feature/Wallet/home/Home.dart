@@ -48,8 +48,9 @@ class _WallethomeState extends ConsumerState<Wallethome> {
   AuthenticatedUser authUser = AuthenticatedUser();
 
   List<ActivityModel> activities = [];
-
+ 
   Future<WalletResponse> walletService() async {
+    
     if (userDetails.firstName == null || userDetails.lastName == null) {
       print('User details are not available yet');
       throw Exception('User details are not available yet');
@@ -57,9 +58,10 @@ class _WallethomeState extends ConsumerState<Wallethome> {
 
     var accountName = '${userDetails.firstName} ${userDetails.lastName}';
     var url = Uri.parse(
-        'https://sandbox.api.zeeh.africa/wallet/get_or_create_wallet');
+        'https://v2.api.zeeh.africa/wallet/get_or_create_wallet');
     var body =
         json.encode({"userId": userDetails.id, "account_name": accountName});
+
 
     var response = await http.post(
       url,
