@@ -48,9 +48,10 @@ class _IndividualsState extends ConsumerState<Individuals> {
   dynamic User_id;
   bool _apiCallCompleted = false;
   bool _apiCallCompleted2 = false;
-  // Flag to track API call completion
   var selectedValue1;
   var selectedValue2;
+
+  var Err;
 
   Future<void> loadFont() async {
     final fontData =
@@ -83,20 +84,24 @@ class _IndividualsState extends ConsumerState<Individuals> {
       _downloading = true;
     });
 
-    var url = Uri.parse('https://v2.api.zeeh.africa/credit_reports/crc_basic');
-    var payload = {"bvn": bvn.text, "mobile_app": true, "user_id": User_id};
+    var payload1 = {"bvn": bvn.text, "mobile_app": 'true', "user_id": User_id};
+    var payload2 = {"bvn": bvn.text,};
+    var url = Uri.parse('https://v2.api.zeeh.africa/credit_reports/crc_basic')
+        .replace(queryParameters: payload1);
+
     var response = await http.post(
       url,
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'Secret_Key': 'pv_mxl58PLF5Rd3yZ8i61tbVNQFg',
       },
-      body: jsonEncode(payload),
+      body: jsonEncode(payload2),
     );
 
     if (response.statusCode == 200) {
       var jsonResponse = jsonDecode(response.body);
       var data = jsonResponse['data'];
+      print("All Data Gotten $data");
       setState(() {
         alldata = data;
         _apiCallCompleted = true;
@@ -131,19 +136,24 @@ class _IndividualsState extends ConsumerState<Individuals> {
       print('Post request failed with status: ${response.statusCode}');
       print('Response body: ${response.body}');
 
-      if (response.statusCode == 400 &&
-          response.body.contains('In-sufficient fund!')) {
-        setState(() {
-          _downloaded = false;
-        });
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            backgroundColor: ZeehColors.buttonPurple,
-            content: Text('Insufficient funds! Please try again later.'),
-            duration: Duration(seconds: 3),
-          ),
-        );
+      // Extract error message from response body
+      var errorMessage = 'Failed to fetch data. Please try again later.';
+      if (response.body != null && response.body.isNotEmpty) {
+        try {
+          var errorResponse = jsonDecode(response.body);
+          errorMessage = errorResponse['message'] ?? errorMessage;
+        } catch (e) {
+          print('Error parsing error response: $e');
+        }
       }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: ZeehColors.buttonPurple,
+          content: Text(errorMessage),
+          duration: Duration(seconds: 3),
+        ),
+      );
     }
   }
 
@@ -153,7 +163,6 @@ class _IndividualsState extends ConsumerState<Individuals> {
     });
 
     var url = Uri.parse(
-        //'https://sandbox.api.zeeh.africa/credit_reports/one_history?plan=plan&id=${bvn.text}&mobile_app=true'
         'https://v2.api.zeeh.africa/credit_reports/one_history?id=${bvn.text}&mobile_app=true&plan=crc_basic');
 
     var response = await http.get(
@@ -179,7 +188,6 @@ class _IndividualsState extends ConsumerState<Individuals> {
       });
       print(response.statusCode);
       print(data);
-
     } else if (response.statusCode == 400) {
       setState(() {
         _downloading2 = false;
@@ -192,6 +200,28 @@ class _IndividualsState extends ConsumerState<Individuals> {
       });
       print('Post request failed with status: ${response.statusCode}');
       print('Response body: ${response.body}');
+
+      // Extract error message from response body
+      var errorMessage = 'Failed to fetch data. Please try again laters';
+      if (response.body != null && response.body.isNotEmpty) {
+        try {
+          var errorResponse = jsonDecode(response.body);
+          errorMessage = errorResponse['message'] ?? errorMessage;
+          setState(() {
+            Err = errorMessage;
+          });
+        } catch (e) {
+          print('Error parsing error response: $e');
+        }
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: ZeehColors.buttonPurple,
+          content: Text(errorMessage),
+          duration: Duration(seconds: 3),
+        ),
+      );
     }
   }
 
@@ -222,15 +252,12 @@ class _IndividualsState extends ConsumerState<Individuals> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 35.h),
-
               DMSanText(
                 text: "Creadit bureau",
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w500,
               ),
-
               SizedBox(height: 10.h),
-
               Container(
                 decoration: BoxDecoration(
                     border: Border.all(width: 1.0, color: ZeehColors.greyColor),
@@ -258,17 +285,13 @@ class _IndividualsState extends ConsumerState<Individuals> {
                   isExpanded: true,
                 ),
               ),
-
               SizedBox(height: 15.h),
-
               DMSanText(
                 text: "Type of report",
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w500,
               ),
-
               SizedBox(height: 10.h),
-
               Container(
                 decoration: BoxDecoration(
                     border: Border.all(width: 1.0, color: ZeehColors.greyColor),
@@ -309,7 +332,6 @@ class _IndividualsState extends ConsumerState<Individuals> {
                   isExpanded: true, // Allow the dropdown to expand horizontally
                 ),
               ),
-
               SizedBox(height: 15.h),
               DMSanText(
                 text: "BVN",
@@ -322,104 +344,89 @@ class _IndividualsState extends ConsumerState<Individuals> {
                 hintText: "Enter your BVN",
               ),
               SizedBox(height: 300.h),
+              GestureDetector(
+                onTap: () async {
+                  
+                  if (selectedValue2 == "old") {
+                    if (_downloaded2 && olddata != null) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => OldHistory(scoreData: olddata!),
+                        ),
+                      );
 
-GestureDetector(
-  onTap: () async {
-    if (selectedValue2 == "old") {
-      if (_downloaded2 && olddata != null) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => OldHistory(scoreData: olddata!),
-          ),
-        );
-      } else {
-        try {
-          await CheckOldhistory();
-          if (_downloaded2 && olddata != null) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => OldHistory(scoreData: olddata!),
+                    } else {
+
+                      try {
+                        await CheckOldhistory();
+                        if (!_downloaded2 || olddata == null) {
+                          // Display SnackBar with error message from API response
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              backgroundColor: ZeehColors.buttonPurple,
+                              content: Text('Previous records not found'),
+                              duration: Duration(seconds: 3),
+                            ),
+                          );
+                        }
+                      } catch (e) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            backgroundColor: ZeehColors.buttonPurple,
+                            content: Text(
+                                'Failed to fetch data. Please try again later.'),
+                            duration: Duration(seconds: 3),
+                          ),
+                        );
+                      }
+                    }
+                  } else if (selectedValue2 == "new") {
+                    await _downloadPdf();
+                    if (!_downloaded) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          backgroundColor: ZeehColors.buttonPurple,
+                          content: Text(
+                              'Failed to fetch data. Please try again later.'),
+                          duration: Duration(seconds: 3),
+                        ),
+                      );
+                    }
+                  }
+                },
+                child: (_downloading2 || _downloading)
+                    ? Center(
+                        child: LoadingIndicatorWidget(
+                          color: ZeehColors.buttonPurple,
+                          height: 20.h,
+                          width: 20.w,
+                        ),
+                      )
+                    : Padding(
+                        padding: const EdgeInsets.only(left: 10, right: 10),
+                        child: Container(
+                          height: 45.h,
+                          width: MediaQuery.of(context).size.width - 20,
+                          decoration: BoxDecoration(
+                            color: ZeehColors.buttonPurple,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Center(
+                            child: _downloaded2
+                                ? DMSanText(
+                                    text: "Preview",
+                                    textColor: Colors.white,
+                                  )
+                                : DMSanText(
+                                    text: "Generate report",
+                                    textColor: Colors.white,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                          ),
+                        ),
+                      ),
               ),
-            );
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                backgroundColor: ZeehColors.buttonPurple,
-                content: Text(
-                  'Failed to fetch data. Please try again later.'),
-                duration: Duration(seconds: 3),
-              ),
-            );
-          }
-        } catch (e) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              backgroundColor: ZeehColors.buttonPurple,
-              content: Text(
-                'Failed to fetch data. Please try again later.'),
-              duration: Duration(seconds: 3),
-            ),
-          );
-        }
-      }
-    } else if (selectedValue2 == "new") {
-      await _downloadPdf(); 
-      if (_downloaded) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ScoreHistory(scoreData: alldata!),
-          ),
-        );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            backgroundColor: ZeehColors.buttonPurple,
-            content: Text(
-              'Failed to fetch data. Please try again later.'),
-            duration: Duration(seconds: 3),
-          ),
-        );
-      }
-    }
-  },
-  child: (_downloading2 || _downloading)
-    ? Center(
-        child: LoadingIndicatorWidget(
-          color: ZeehColors.buttonPurple,
-          height: 20.h,
-          width: 20.w,
-        ),
-      )
-    : Padding(
-        padding: const EdgeInsets.only(left: 10, right: 10),
-        child: Container(
-          height: 45.h,
-          width: MediaQuery.of(context).size.width - 20,
-          decoration: BoxDecoration(
-            color: ZeehColors.buttonPurple,
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Center(
-            child: _downloaded2
-              ? DMSanText(
-                  text: "Preview",
-                  textColor: Colors.white,
-                )
-              : DMSanText(
-                  text: "Generate report",
-                  textColor: Colors.white,
-                  fontWeight: FontWeight.w500,
-                ),
-          ),
-        ),
-      ),
-),
-
-
-
               SizedBox(height: 10.h),
             ],
           ),
