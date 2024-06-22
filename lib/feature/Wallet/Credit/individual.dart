@@ -16,6 +16,7 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import 'package:zeeh_mobile/constants/colors.dart';
 import 'package:zeeh_mobile/feature/Wallet/Credit/oldhistory.dart';
+import 'package:zeeh_mobile/feature/Wallet/Credit/previewlive.dart';
 import 'package:zeeh_mobile/feature/Wallet/Credit/scorehistory.dart';
 import 'package:zeeh_mobile/feature/Wallet/Credit/widgets.dart';
 import 'package:zeeh_mobile/feature/Wallet/model/wallet.dart';
@@ -85,7 +86,7 @@ class _IndividualsState extends ConsumerState<Individuals> {
     });
 
     var payload1 = {"bvn": bvn.text, "mobile_app": 'true', "user_id": User_id};
-    var payload2 = {"bvn": bvn.text,};
+    var payload2 = {"bvn": bvn.text};
     var url = Uri.parse('https://v2.api.zeeh.africa/credit_reports/crc_basic')
         .replace(queryParameters: payload1);
 
@@ -102,32 +103,25 @@ class _IndividualsState extends ConsumerState<Individuals> {
       var jsonResponse = jsonDecode(response.body);
       var data = jsonResponse['data'];
       print("All Data Gotten $data");
+
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('apiResponse', jsonEncode(data));
+
       setState(() {
         alldata = data;
         _apiCallCompleted = true;
       });
 
-      final pdf = pw.Document();
-      pdf.addPage(
-        pw.Page(
-          build: (pw.Context context) {
-            return pw.Center(
-              child: pw.Text('CRC Credit History: ${data['name']}',
-                  style: pw.TextStyle(font: fonts)),
-            );
-          },
-        ),
-      );
-
-      final directory = await getApplicationDocumentsDirectory();
-      final filePath = '${directory.path}/crc_credit_history.pdf';
-      final file = File(filePath);
-      await file.writeAsBytes(await pdf.save());
-
       setState(() {
         _downloading = false;
         _downloaded = true;
       });
+
+        Navigator.push(
+          context, 
+          MaterialPageRoute(builder: (context) => Previewlive())
+        );
+
     } else {
       setState(() {
         _downloading = false;
@@ -136,7 +130,6 @@ class _IndividualsState extends ConsumerState<Individuals> {
       print('Post request failed with status: ${response.statusCode}');
       print('Response body: ${response.body}');
 
-      // Extract error message from response body
       var errorMessage = 'Failed to fetch data. Please try again later.';
       if (response.body != null && response.body.isNotEmpty) {
         try {
@@ -239,10 +232,19 @@ class _IndividualsState extends ConsumerState<Individuals> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         centerTitle: true,
-        title: DMSanText(
-          text: "For Individuals",
-          fontSize: 18,
-          fontWeight: FontWeight.w500,
+        title: GestureDetector(
+          onTap: () {
+          Navigator.push(
+          context, 
+          MaterialPageRoute(builder: (context) => Previewlive())
+        );
+
+          },
+          child: DMSanText(
+            text: "For Individuals",
+            fontSize: 18,
+            fontWeight: FontWeight.w500,
+          ),
         ),
       ),
       body: SingleChildScrollView(
@@ -346,7 +348,6 @@ class _IndividualsState extends ConsumerState<Individuals> {
               SizedBox(height: 300.h),
               GestureDetector(
                 onTap: () async {
-                  
                   if (selectedValue2 == "old") {
                     if (_downloaded2 && olddata != null) {
                       Navigator.push(
@@ -355,13 +356,10 @@ class _IndividualsState extends ConsumerState<Individuals> {
                           builder: (context) => OldHistory(scoreData: olddata!),
                         ),
                       );
-
                     } else {
-
                       try {
                         await CheckOldhistory();
                         if (!_downloaded2 || olddata == null) {
-                          // Display SnackBar with error message from API response
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               backgroundColor: ZeehColors.buttonPurple,
@@ -383,16 +381,7 @@ class _IndividualsState extends ConsumerState<Individuals> {
                     }
                   } else if (selectedValue2 == "new") {
                     await _downloadPdf();
-                    if (!_downloaded) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          backgroundColor: ZeehColors.buttonPurple,
-                          content: Text(
-                              'Failed to fetch data. Please try again later.'),
-                          duration: Duration(seconds: 3),
-                        ),
-                      );
-                    }
+
                   }
                 },
                 child: (_downloading2 || _downloading)

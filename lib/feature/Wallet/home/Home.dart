@@ -56,6 +56,9 @@ class _WallethomeState extends ConsumerState<Wallethome> {
       throw Exception('User details are not available yet');
     }
 
+ //https://v2.api.zeeh.africa
+//https://dev.api.usezeeh.com
+
     var accountName = '${userDetails.firstName} ${userDetails.lastName}';
     var url = Uri.parse(
         'https://v2.api.zeeh.africa/wallet/get_or_create_wallet');
@@ -132,6 +135,14 @@ class _WallethomeState extends ConsumerState<Wallethome> {
     }
 
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Color(0xFFFCFCFC),
+        title: TopRow2(
+                        name: userDetails.firstName,
+                        activities: activities.length,
+                      ),
+      ),
       backgroundColor: Color(0xFFFCFCFC),
       body: FutureBuilder<WalletResponse>(
         future: walletService(),
@@ -185,13 +196,13 @@ class _WallethomeState extends ConsumerState<Wallethome> {
                 child: Column(
                   children: [
                     SizedBox(height: 10),
-                    GestureDetector(
-                      onTap: () {},
-                      child: TopRow2(
-                        name: userDetails.firstName,
-                        activities: activities.length,
-                      ),
-                    ),
+                    // GestureDetector( 
+                    //   onTap: () {},
+                    //   child: TopRow2(
+                    //     name: userDetails.firstName,
+                    //     activities: activities.length,
+                    //   ),
+                    // ),
                     const Divider(
                       color: ZeehColors.greyColor,
                       thickness: 1.0,

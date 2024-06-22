@@ -19,7 +19,8 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Future.delayed(
-      const Duration(seconds: 3),
+     const Duration(seconds: 3),
+   //  const Duration(minutes: 2),
       () {
         navigateReplace(context, const OnboardingScreen());
       },
@@ -39,7 +40,7 @@ class _SplashScreenState extends State<SplashScreen> {
             children: [
               SvgPicture.asset(
                 ZeehAssets.finnacleIcon,
-                height: 150.h,
+                height: 120.h,
                 width: 216.w,
               ),
               SizedBox(height: 8.h),

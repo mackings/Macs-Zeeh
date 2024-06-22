@@ -113,8 +113,8 @@ class _AnimatedSplashScreenState extends ConsumerState<AnimatedSplashScreen>
           children: [
             Image.asset(
               ZeehAssets.roundedZeehLogo,
-              height: 200.0,
-              width: 200.0,
+              height: 100.0,
+              width: 100.0,
             ),
             // FadeTransition(
             //   opacity: Tween<double>(

@@ -14,7 +14,6 @@ class OldHistory extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
-
    // Safely extract values from scoreData with default values
     String bvn = scoreData['data']['bvn']?.toString() ?? 'N/A';
     String customerId = scoreData['data']['customerId']?.toString() ?? 'N/A';
@@ -48,7 +47,7 @@ class OldHistory extends ConsumerWidget {
           )
         : Scaffold(
       appBar: AppBar(
-        title: Text('Old History'),
+        title: Text('CRC Credit history'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -60,14 +59,17 @@ class OldHistory extends ConsumerWidget {
             padding: const EdgeInsets.all(8.0),
             child: ListView(
               children: [
+
                 Row(
                   children: [
-                    DMSanText(
+                    DMSanText( 
                       text: "Credit history data",
                       fontWeight: FontWeight.w500,
                     ),
                   ],
                 ),
+
+
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: CustomRow(
@@ -77,6 +79,7 @@ class OldHistory extends ConsumerWidget {
                     subtitle2: customerId,
                   ),
                 ),
+
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: CustomRow(
@@ -101,14 +104,14 @@ class OldHistory extends ConsumerWidget {
                     title1: 'Date of birth',
                     subtitle1: dateOfBirth,
                     title2: "Phone number",
-                    subtitle2: 'N/A', // Assuming phone number is not provided
+                    subtitle2: 'N/A', 
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: CustomRow(
                     title1: 'Address',
-                    subtitle1: address == null? "N/A":address,
+                    subtitle1: address =="null"? "N/A":address,
                     title2: "",
                     subtitle2: "",
                   ),
@@ -125,7 +128,7 @@ class OldHistory extends ConsumerWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: CustomRow(
-                    title1: 'Total No of Delinquent Facilities',
+                    title1: 'No of Delinquent Facilities',
                     subtitle1: totalNoOfDelinquentFacilities,
                     title2: "",
                     subtitle2: "",
@@ -143,9 +146,9 @@ class OldHistory extends ConsumerWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: CustomRow(
-                    title1: 'Total No of Institutions',
+                    title1: 'Total Institutions',
                     subtitle1: totalNoOfInstitutions,
-                    title2: "Total No of Active loans",
+                    title2: "Total Active loans",
                     subtitle2: totalNoOfActiveLoans,
                   ),
                 ),
@@ -153,7 +156,7 @@ class OldHistory extends ConsumerWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: CustomRow(
                     title1: 'Total Borrowed',
-                    subtitle1: totalBorrowed,
+                    subtitle1: 'N${totalBorrowed}',
                     title2: "Total Outstanding",
                     subtitle2: totalOutstanding,
                   ),

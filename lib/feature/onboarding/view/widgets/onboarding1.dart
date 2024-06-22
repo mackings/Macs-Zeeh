@@ -74,13 +74,23 @@ class OnboardingWidget extends StatelessWidget {
       width: 375.w,
       child: Stack(
         children: [
-          SizedBox(
+          // SizedBox(
+          //   height: 406.h,
+          //   width: double.infinity,
+          //   child: FittedBox(
+          //     fit: BoxFit.fill,
+          //     child: Image.asset(
+          //       image ?? ZeehAssets.thecc
+          //     ),
+          //   ),
+          // ),
+           SizedBox(
             height: 406.h,
             width: double.infinity,
             child: FittedBox(
               fit: BoxFit.fill,
               child: Image.asset(
-                image ?? ZeehAssets.onboardingImage1V2,
+                image ?? ZeehAssets.thecc
               ),
             ),
           ),
@@ -106,7 +116,7 @@ class OnboardingWidget extends StatelessWidget {
                   children: [
                     SizedBox(height: 40.h),
                     DMSanText(
-                      text: title ?? "More credit,",
+                      text: title ?? "Easy way to generate",
                       textColor: Colors.black,
                       fontSize: 24.sp,
                       fontWeight: FontWeight.w500,
@@ -115,7 +125,7 @@ class OnboardingWidget extends StatelessWidget {
 
                     // More Merit
                     DMSanText(
-                      text: title2 ?? "More Merits",
+                      text: title2 ?? "your credit report",
                       textColor: Colors.black,
                       fontSize: 24.sp,
                       fontWeight: FontWeight.w500,
@@ -129,7 +139,7 @@ class OnboardingWidget extends StatelessWidget {
                       width: 280.w,
                       child: DMSanText(
                         text: description ??
-                            "By connecting your bank, your credit score gives you more range on loans, investment & BNPL services.",
+                            "Features that makes it easier for you to get individual and business credit report.",
                         maxLines: 3,
                         textAlign: TextAlign.center,
                         fontSize: 14.sp,

@@ -758,11 +758,12 @@ class TopRow2 extends StatelessWidget {
     return Container(
       height: 90.h,
       padding: EdgeInsets.only(
-        top: 39.h,
+        top: 35.h,
         left: 24.w,
         right: 24.w,
       ),
-      color: Colors.white,
+     // color: Colors.white,
+     color: Color(0xFFFCFCFC),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,

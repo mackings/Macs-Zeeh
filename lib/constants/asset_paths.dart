@@ -3,6 +3,7 @@ class ZeehAssets {
   static const credithomeicon ="assets/icons/cinsights.svg";
   static const transicon ="assets/icons/trans.svg";
   static const finnacleIcon = "assets/icons/finnacle_icon.svg";
+  static const thecc = "assets/icons/trans.svg";
 
   static const creditChart = "assets/icons/credit_chart.svg";
 
@@ -154,6 +155,7 @@ class ZeehAssets {
 
   static const barChart = "assets/icons/bar_chart.png";
   static const businessReport = "assets/icons/business_rep.png";
+  static const amaz = "assets/icons/amaz.png";
   static const timeMachine = "assets/icons/time_machine.png";
 
   // User Profile

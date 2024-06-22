@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:zeeh_mobile/common/components/text_widget.dart';
 import 'package:zeeh_mobile/constants/colors.dart';
 
 class DropdownFieldBox<T> extends StatelessWidget {
@@ -68,6 +69,72 @@ class DropdownFieldBox<T> extends StatelessWidget {
             color: const Color(0x805F6D7E),
           ),
         ),
+      ),
+    );
+  }
+}
+
+
+
+
+class SuccessModalSheet extends StatelessWidget {
+  final String message;
+  final VoidCallback onButtonPressed;
+
+  SuccessModalSheet({required this.message, required this.onButtonPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(16.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10)
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Icon(Icons.check_circle, color: ZeehColors.buttonPurple, size: 50),
+          SizedBox(height: 16.0),
+          Text(
+            'Credit report generated',
+            style: TextStyle(
+              fontSize: 24.0,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          SizedBox(height: 2.0),
+          Text(
+            message,
+            style: TextStyle(
+              fontSize: 16.0,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: 16.0),
+          Padding(
+            padding: const EdgeInsets.only(left: 10, right: 10),
+            child: InkWell(
+              onTap: onButtonPressed,
+              child: Container(
+                height: 45,
+                width: MediaQuery.of(context).size.width - 20,
+                decoration: BoxDecoration(
+                  color: ZeehColors.buttonPurple,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Center(
+                  child: Text(
+                    "Preview Report",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

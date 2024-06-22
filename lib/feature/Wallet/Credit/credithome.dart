@@ -92,41 +92,42 @@ Padding(
       SizedBox(height: MediaQuery.of(context).size.height * 0.015),
 
 
-      // GestureDetector(
-      //   onTap: () {
-      //     navigate(context, Businesses());
-      //   },
-      //   child: Container(
-      //     decoration: BoxDecoration(
-      //       border: Border.all(width: 0.5, color: Color(0xFFD7D7D7)),
-      //       borderRadius: BorderRadius.circular(15),
-      //     ),
-      //     child: ListTile(
-      //       title: DMSanText(
-      //         text: "For Businesses",
-      //         fontSize: MediaQuery.of(context).size.width * 0.04,
-      //         fontWeight: FontWeight.w500,
-      //       ),
-      //       subtitle: Text(
-      //         'Generate business credit insights',
-      //         style: TextStyle(
-      //           color: Color(0xFF5F6D7E),
-      //           fontSize: MediaQuery.of(context).size.width * 0.032,
-      //           fontFamily: 'DM Sans',
-      //           fontWeight: FontWeight.w400,
-      //         ),
-      //       ),
-      //       leading: CircleAvatar(
-      //         backgroundColor: ZeehColors.buttonPurple,
-      //         child: Icon(
-      //           Icons.business,
-      //           color: Colors.white,
-      //         ),
-      //       ),
-      //       trailing: Icon(Icons.arrow_forward_ios),
-      //     ),
-      //   ),
-      // ),
+      GestureDetector(
+        onTap: () {
+          //navigate(context, Individuals());
+          navigate(context, Businesses());
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(width: 0.5, color: Color(0xFFD7D7D7)),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: ListTile(
+            title: DMSanText(
+              text: "For Businesses",
+              fontSize: MediaQuery.of(context).size.width * 0.04,
+              fontWeight: FontWeight.w500,
+            ),
+            subtitle: Text(
+              'Generate business credit insights',
+              style: TextStyle(
+                color: Color(0xFF5F6D7E),
+                fontSize: MediaQuery.of(context).size.width * 0.032,
+                fontFamily: 'DM Sans',
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+            leading: CircleAvatar(
+              backgroundColor: ZeehColors.buttonPurple,
+              child: Icon(
+                Icons.business,
+                color: Colors.white,
+              ),
+            ),
+            trailing: Icon(Icons.arrow_forward_ios),
+          ),
+        ),
+      ),
     ],
   ),
 )
