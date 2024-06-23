@@ -151,11 +151,11 @@ class ZeehAssets {
   // Credit Screen
   static const arrowUpGreen = "assets/icons/arrow-up_green.png";
 
-  static const arrowDownRed = "assets/icons/arrow_red_down.png";
+  static const arrowDownRed = "assets/icons/arrow_red_down.png"; 
 
   static const barChart = "assets/icons/bar_chart.png";
   static const businessReport = "assets/icons/business_rep.png";
-  static const amaz = "assets/icons/amaz.png";
+  static const amaz = "assets/icons/amaz.png"; 
   static const timeMachine = "assets/icons/time_machine.png";
 
   // User Profile
@@ -190,6 +190,8 @@ class ZeehAssets {
   // Onboarding Image V2
 
   // Onboarding Image 1 V2
+
+  static const amaze = "assets/images/finalamaz.png";
   static const onboardingImage1V2 = "assets/images/onboarding_image_1_v2.png";
   // Onboarding Image 2 V2
   static const onboardingImage2V2 = "assets/images/onboarding_image_2_v2.png";

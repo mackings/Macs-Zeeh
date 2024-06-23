@@ -74,16 +74,7 @@ class OnboardingWidget extends StatelessWidget {
       width: 375.w,
       child: Stack(
         children: [
-          // SizedBox(
-          //   height: 406.h,
-          //   width: double.infinity,
-          //   child: FittedBox(
-          //     fit: BoxFit.fill,
-          //     child: Image.asset(
-          //       image ?? ZeehAssets.thecc
-          //     ),
-          //   ),
-          // ),
+
            SizedBox(
             height: 406.h,
             width: double.infinity,
@@ -94,6 +85,7 @@ class OnboardingWidget extends StatelessWidget {
               ),
             ),
           ),
+
 
           // Onboarding Image 1
           Positioned(
@@ -116,7 +108,7 @@ class OnboardingWidget extends StatelessWidget {
                   children: [
                     SizedBox(height: 40.h),
                     DMSanText(
-                      text: title ?? "Easy way to generate",
+                      text: title ?? "Easy ways to generate",
                       textColor: Colors.black,
                       fontSize: 24.sp,
                       fontWeight: FontWeight.w500,

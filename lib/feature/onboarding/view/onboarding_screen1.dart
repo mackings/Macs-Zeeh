@@ -46,7 +46,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
     // V Code
     // Scaffold(
-    //   backgroundColor: ZeehColors.onboardingBackground,
+    //   backgroundColor: ZeehColors.onboar dingBackground,
     //   body: Column(
     //     mainAxisAlignment: MainAxisAlignment.start,
     //     children: [
@@ -110,14 +110,17 @@ class OnbaoardingPageView extends StatelessWidget {
     return PageView(
       controller: controller,
       children: const [
-       // OnboardingWidget(),
+       //OnboardingWidget(),
+
         OnboardingWidget(
-          image: ZeehAssets.amaz,
+         // image: ZeehAssets.amaz,
+         image: ZeehAssets.amaze,
           title: "Easy way to generate", 
           title2: "your credit report",
           description:
               "Features that makes it easier for you to get individual and business credit report.",
         ),
+
         OnboardingWidget(
           image: ZeehAssets.onboardingImage2V2,
           title: "Easy way to manage",
@@ -125,6 +128,7 @@ class OnbaoardingPageView extends StatelessWidget {
           description:
               "Features that can make it easier for you to save and plan finances for the future",
         ),
+
         OnboardingWidget(
           image: ZeehAssets.onboardingImage3V2,
           title: "Investment got",
@@ -132,6 +136,7 @@ class OnbaoardingPageView extends StatelessWidget {
           description:
               "Enjoy commission free stock trading. Online investing has never been easy than it is right now",
         ),
+
       ],
     );
   }

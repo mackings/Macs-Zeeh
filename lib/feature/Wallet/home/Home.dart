@@ -137,13 +137,14 @@ class _WallethomeState extends ConsumerState<Wallethome> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
+        // backgroundColor:Colors.white,
         backgroundColor: Color(0xFFFCFCFC),
         title: TopRow2(
-                        name: userDetails.firstName,
+                        name: userDetails.firstName ==null?"Zeeh":userDetails.firstName,
                         activities: activities.length,
                       ),
       ),
-      backgroundColor: Color(0xFFFCFCFC),
+     backgroundColor: Color(0xFFFCFCFC),
       body: FutureBuilder<WalletResponse>(
         future: walletService(),
         builder: (context, snapshot) {
