@@ -33,38 +33,38 @@ import 'package:zeeh_mobile/common/components/loading_indicator.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:zeeh_mobile/feature/wallet/home/home2';
-//import 'package:zeeh_mobile/feature/wallet/home/home2.dart';
 
-class Wallethome extends ConsumerStatefulWidget {
-  const Wallethome({super.key});
+class Wallethome2 extends ConsumerStatefulWidget {
+  const Wallethome2({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _WallethomeState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _Wallethome2State();
 }
 
-class _WallethomeState extends ConsumerState<Wallethome> {
+class _Wallethome2State extends ConsumerState<Wallethome2> {
   dynamic credit = 0;
 
   UserDetails userDetails = UserDetails();
   AuthenticatedUser authUser = AuthenticatedUser();
 
   List<ActivityModel> activities = [];
-
+ 
   Future<WalletResponse> walletService() async {
+    
     if (userDetails.firstName == null || userDetails.lastName == null) {
       print('User details are not available yet');
       throw Exception('User details are not available yet');
     }
 
-    //https://v2.api.zeeh.africa
+ //https://v2.api.zeeh.africa
 //https://dev.api.usezeeh.com
 
     var accountName = '${userDetails.firstName} ${userDetails.lastName}';
-    var url =
-        Uri.parse('https://v2.api.zeeh.africa/wallet/get_or_create_wallet');
+    var url = Uri.parse(
+        'https://v2.api.zeeh.africa/wallet/get_or_create_wallet');
     var body =
         json.encode({"userId": userDetails.id, "account_name": accountName});
+
 
     var response = await http.post(
       url,
@@ -95,19 +95,19 @@ class _WallethomeState extends ConsumerState<Wallethome> {
   }
 
   String capitalizeFirstLetter(String text) {
-    if (text.isEmpty) return text;
-    return text[0].toUpperCase() + text.substring(1);
-  }
+  if (text.isEmpty) return text;
+  return text[0].toUpperCase() + text.substring(1);
+}
 
-  //String displayWalletName = walletname.split('/').last;
 
   @override
   void initState() {
+
     // Timer(Duration(seconds: 1), () {
     //   print(userDetails.firstName);
     //  // walletService();
     // });
-
+    
     super.initState();
   }
 
@@ -140,12 +140,6 @@ class _WallethomeState extends ConsumerState<Wallethome> {
       userDetails = userDetailsState.userDetails;
     }
 
-      ScreenUtil.init(
-      context,
-      designSize: Size(375, 812),
-      minTextAdapt: true,
-      splitScreenMode: true,
-    );
 
     return Scaffold(
       appBar: AppBar(
@@ -219,106 +213,103 @@ class _WallethomeState extends ConsumerState<Wallethome> {
 
 
 Container(
-      color: Colors.white,
-      width: MediaQuery.of(context).size.width,
-      height: 355.h,
-      child: Stack(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 30),
-            child: Container(
-              height: 270.h,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/images/zeehcard.png"),
-                  fit: BoxFit.cover,
+  color: Colors.white,
+  width: MediaQuery.of(context).size.width,
+  height: 330,
+  child: Stack(
+    children: [
+      Padding(
+        padding: const EdgeInsets.only(top: 30),
+        child: Container(
+          height: 260,
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/images/zeehcard.png"),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 75),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Your\nbalance',
+                  style: GoogleFonts.montserrat(
+                    fontSize: 10.sp,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white.withOpacity(0.4),
+                  ),
                 ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 72.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                Text(
+                  walletbalance,
+                  style: GoogleFonts.dmMono(
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                  ),
+                ),
+                SizedBox(height: 2.h),
+                Row(
                   children: [
                     Text(
-                      'Your\nbalance',
+                      "${capitalizeFirstLetter(walletname.split('/').last)}",
                       style: GoogleFonts.montserrat(
-                        fontSize: 14.sp, // Fixed font size
+                        fontSize: 10.sp,
                         fontWeight: FontWeight.w600,
                         color: Colors.white.withOpacity(0.4),
                       ),
                     ),
-                    Text(
-                      walletbalance,
-                      style: GoogleFonts.dmMono(
-                        fontSize: 20.sp, // Fixed font size
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                      ),
-                    ),
-                    SizedBox(height: 8.h), // Fixed height
-                    Row(
-                      children: [
-                        Text(
-                          "${capitalizeFirstLetter(walletname.split('/').last)}",
-                          style: GoogleFonts.montserrat(
-                            fontSize: 16, // Fixed font size
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white.withOpacity(0.4),
-                          ),
-                        ),
-                        SizedBox(width: 30), // Fixed width
-                      ],
-                    ),
+                    SizedBox(width: 30.w),
                   ],
                 ),
-              ),
+              ],
             ),
           ),
-
-          
-          Positioned(
-            top: 265.h, 
-            left: 45.w,
-            right: 45.w,
-            child: GestureDetector(
-              onTap: () {
-                navigate(context, Fundwallet());
-              },
-              child: Container(
-                height: 50.0,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.add,
-                      color: ZeehColors.buttonPurple,
-                    ),
-                    SizedBox(width: 5.0),
-                    Text(
-                      "Top-up",
-                      style: GoogleFonts.dmSans(
-                        color: ZeehColors.buttonPurple,
-                        fontSize: 14.0,
-                      ),
-                    ),
-                  ],
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(
-                    width: 0.5,
-                    color: ZeehColors.greyColor,
-                  ),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
-    ),
+      Positioned(
+        top: 250, 
+        left: 45,
+        right: 45,
+        child: GestureDetector(
+          onTap: () {
+            navigate(context, Fundwallet());
+          },
+          child: Container(
+            height: 50.0,
+            width: MediaQuery.of(context).size.width - 90, // Ensure button width is closer to screen width
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.add,
+                  color: ZeehColors.buttonPurple,
+                ),
+                SizedBox(width: 5.0),
+                DMSanText(
+                  text: "Top-up",
+                  textColor: ZeehColors.buttonPurple,
+                  fontSize: 14.0,
+                ),
+              ],
+            ),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(
+                width: 0.5,
+                color: ZeehColors.greyColor,
+              ),
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+        ),
+      ),
+    ],
+  ),
+),
 
 
 Divider(

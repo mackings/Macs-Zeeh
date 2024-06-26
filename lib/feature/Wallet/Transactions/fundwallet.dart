@@ -4,7 +4,9 @@ import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
+import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zeeh_mobile/common/components/text_widget.dart';
 import 'package:zeeh_mobile/constants/colors.dart';
@@ -158,7 +160,6 @@ class Mycard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               Padding(
                 padding: const EdgeInsets.only(left: 10),
                 child: Text(
@@ -167,19 +168,16 @@ class Mycard extends StatelessWidget {
                     color: Color(0xFF242739),
                     fontSize: 16,
                     fontFamily: 'DM Sans',
-                    fontWeight: FontWeight.w700, 
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
               ),
-
               SizedBox(height: 20),
-              
               _buildAccountDetail(
                   'Account Name', virtualAccount?.accountName ?? ""),
               _buildAccountDetail(
                   'Account Number', virtualAccount?.accountNumber ?? ""),
               _buildAccountDetail('Bank Name', virtualAccount?.bankName ?? ""),
-
             ],
           ),
         ),
@@ -221,8 +219,12 @@ class Mycard extends StatelessWidget {
         ),
         IconButton(
           onPressed: () {
-            FlutterClipboard.copy(virtualAccount!.accountNumber)
-                .then((value) {});
+            FlutterClipboard.copy(virtualAccount!.accountNumber).then((value) {
+              Fluttertoast.showToast(
+                msg: "Copied",
+                backgroundColor: ZeehColors.buttonPurple
+                );
+            });
           },
           icon: Icon(
             Icons.content_copy_rounded,

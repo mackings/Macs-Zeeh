@@ -21,7 +21,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ZeehColors.onboardingBackground,
+     
+     backgroundColor: ZeehColors.onboardingBackground,
       body: SizedBox(
         height: 812.h,
         width: 375.w,
@@ -110,10 +111,8 @@ class OnbaoardingPageView extends StatelessWidget {
     return PageView(
       controller: controller,
       children: const [
-       //OnboardingWidget(),
 
         OnboardingWidget(
-         // image: ZeehAssets.amaz,
          image: ZeehAssets.amaze,
           title: "Easy way to generate", 
           title2: "your credit report",
@@ -121,21 +120,21 @@ class OnbaoardingPageView extends StatelessWidget {
               "Features that makes it easier for you to get individual and business credit report.",
         ),
 
-        OnboardingWidget(
-          image: ZeehAssets.onboardingImage2V2,
-          title: "Easy way to manage",
-          title2: "your finances",
-          description:
-              "Features that can make it easier for you to save and plan finances for the future",
-        ),
+        // OnboardingWidget(
+        //   image: ZeehAssets.onboardingImage2V2,
+        //   title: "Easy way to manage",
+        //   title2: "your finances",
+        //   description:
+        //       "Features that can make it easier for you to save and plan finances for the future",
+        // ),
 
-        OnboardingWidget(
-          image: ZeehAssets.onboardingImage3V2,
-          title: "Investment got",
-          title2: "Easier",
-          description:
-              "Enjoy commission free stock trading. Online investing has never been easy than it is right now",
-        ),
+        // OnboardingWidget(
+        //   image: ZeehAssets.onboardingImage3V2,
+        //   title: "Investment got",
+        //   title2: "Easier",
+        //   description:
+        //       "Enjoy commission free stock trading. Online investing has never been easy than it is right now",
+        // ),
 
       ],
     );
@@ -157,8 +156,10 @@ class IndicatorWidget extends StatelessWidget {
       controller: controller,
       count: 3,
       effect: ExpandingDotsEffect(
-        activeDotColor: const Color(0xffD9D9D9),
-        dotColor: const Color(0xff4F5057),
+        activeDotColor: Colors.transparent,
+        dotColor: Colors.transparent,
+        // activeDotColor: const Color(0xffD9D9D9),
+        // dotColor: const Color(0xff4F5057),
         dotHeight: 8.h,
         dotWidth: 8.h,
       ),

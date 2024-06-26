@@ -227,6 +227,7 @@ class _IndividualsState extends ConsumerState<Individuals> {
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -253,6 +254,7 @@ class _IndividualsState extends ConsumerState<Individuals> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+
               SizedBox(height: 35.h),
               DMSanText(
                 text: "Creadit bureau",
@@ -260,9 +262,10 @@ class _IndividualsState extends ConsumerState<Individuals> {
                 fontWeight: FontWeight.w500,
               ),
               SizedBox(height: 10.h),
+
               Container(
                 decoration: BoxDecoration(
-                    border: Border.all(width: 1.0, color: ZeehColors.greyColor),
+                    border: Border.all(width: 0.8, color: ZeehColors.greyColor),
                     borderRadius: BorderRadius.circular(8)),
                 child: DropdownButtonFormField<String>(
                   items: const [
@@ -282,21 +285,31 @@ class _IndividualsState extends ConsumerState<Individuals> {
                     border: InputBorder.none,
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+
+                enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide.none, 
+              ),
                   ),
+
+                  
                   value: "crc",
                   isExpanded: true,
                 ),
               ),
+
               SizedBox(height: 15.h),
+
               DMSanText(
                 text: "Type of report",
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w500,
               ),
               SizedBox(height: 10.h),
+
+
               Container(
                 decoration: BoxDecoration(
-                    border: Border.all(width: 1.0, color: ZeehColors.greyColor),
+                    border: Border.all(width: 0.8, color: ZeehColors.greyColor),
                     borderRadius: BorderRadius.circular(8)),
                 child: DropdownButtonFormField<String>(
                   items: const [
@@ -322,6 +335,9 @@ class _IndividualsState extends ConsumerState<Individuals> {
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide.none,
                     ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide.none
+                    ),
 
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
@@ -334,6 +350,8 @@ class _IndividualsState extends ConsumerState<Individuals> {
                   isExpanded: true, // Allow the dropdown to expand horizontally
                 ),
               ),
+
+
               SizedBox(height: 15.h),
               DMSanText(
                 text: "BVN",
@@ -345,7 +363,7 @@ class _IndividualsState extends ConsumerState<Individuals> {
                 controller: bvn,
                 hintText: "Enter your BVN",
               ),
-              SizedBox(height: 300.h),
+              SizedBox(height: 280.h),
               GestureDetector(
                 onTap: () async {
                   if (selectedValue2 == "old") {
@@ -395,7 +413,7 @@ class _IndividualsState extends ConsumerState<Individuals> {
                     : Padding(
                         padding: const EdgeInsets.only(left: 10, right: 10),
                         child: Container(
-                          height: 45.h,
+                          height: 47.h,
                           width: MediaQuery.of(context).size.width - 20,
                           decoration: BoxDecoration(
                             color: ZeehColors.buttonPurple,

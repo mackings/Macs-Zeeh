@@ -279,6 +279,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               showCancelButton: true,
                             ),
 
+                            Divider(
+                              color: ZeehColors.greyColor,
+                              thickness: 1.0,
+                              
+                            ),
                             SizedBox(height: 40.h),
 
                             // Zeeh Icon

@@ -113,9 +113,10 @@ class TextFieldBox extends StatelessWidget {
           fillColor: fillColor ?? Colors.white,
           filled: filled ?? true,
           border: OutlineInputBorder(
+
             borderSide: BorderSide(
               color: borderColor ?? ZeehColors.greyColor,
-              width: 2,
+              width: 3,
             ),
             borderRadius: BorderRadius.all(
               Radius.circular(8.r),
